@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Regression &amp; Correlation Analyzer V1.6.1</title>
+<style>
+:root{--page-bg:#f4f7fb;--panel-bg:#fff;--text:#183153;--muted:#66788a;--border:#d9e2ec;--title-bg:#f7faff;--table-head:#edf4fc;--accent:#176dbf;--accent-contrast:#fff;--header1:#0b4f8a;--header2:#1684d8}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--page-bg);color:var(--text)}header{background:linear-gradient(135deg,var(--header1),var(--header2));color:white;padding:20px 26px;display:flex;justify-content:space-between;gap:16px;align-items:center}.header-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.version-info{text-align:right;line-height:1.5;white-space:nowrap}.version{font-weight:bold;font-size:16px}.date,.credit{font-size:12px;opacity:.9}h1{font-size:26px;margin:0}.sub{font-size:13px;opacity:.9;margin-top:5px}button,input,select{font:inherit}button{border:1px solid var(--border);background:var(--panel-bg);color:var(--text);padding:8px 11px;border-radius:7px;cursor:pointer}button:hover{filter:brightness(.96)}button:disabled{opacity:.45;cursor:not-allowed}.primary{background:var(--accent);color:var(--accent-contrast);border-color:var(--accent)}.theme-bar{max-width:1500px;margin:12px auto 0;padding:0 18px;display:flex;justify-content:flex-end;gap:8px;align-items:center;color:var(--muted);font-size:12px}.theme-bar select{padding:7px 10px;border:1px solid var(--border);border-radius:7px;background:var(--panel-bg);color:var(--text)}main{max-width:1500px;margin:16px auto;padding:0 18px}.panel{background:var(--panel-bg);border:1px solid var(--border);border-radius:10px;margin-bottom:16px;box-shadow:0 3px 14px #14325a12;overflow:hidden}.title{padding:12px 16px;background:var(--title-bg);border-bottom:1px solid var(--border);font-weight:bold;display:flex;justify-content:space-between;gap:12px;align-items:center}.title small{font-weight:normal;font-size:12px;color:var(--muted)}.fields{padding:14px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.field label{display:block;font-size:12px;color:var(--muted);font-weight:bold;margin-bottom:5px}.field input,.field select{width:100%;padding:9px;border:1px solid var(--border);border-radius:6px;background:var(--panel-bg);color:var(--text)}.run{padding:0 14px 14px;text-align:right}.result{padding:14px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.metric{border:1px solid var(--border);border-radius:8px;padding:12px;background:var(--title-bg);min-width:0}.metric small{font-weight:bold;color:var(--muted)}.metric strong{display:block;font-size:19px;margin-top:6px;overflow-wrap:anywhere}.notice{padding:12px;margin-top:12px;background:var(--title-bg);border-left:4px solid var(--accent);border-radius:6px;line-height:1.5}.detail{font-size:12px;line-height:1.5;color:var(--muted);margin-top:10px}.result-actions,.toolbar{display:flex;gap:7px;flex-wrap:wrap;align-items:center;padding:10px 14px}.hint{margin-left:auto;font-size:12px;color:var(--muted)}.sheet{overflow:auto;max-height:560px}table{border-collapse:collapse;width:max-content;min-width:100%}th,td{border:1px solid var(--border);height:34px}.corner,.rowhead{background:var(--title-bg)}.rowhead{position:sticky;left:0;z-index:2;width:52px;min-width:52px;text-align:center;color:var(--muted);cursor:pointer}thead th{position:sticky;top:0;background:var(--table-head);z-index:3}.corner{position:sticky;left:0;z-index:5;cursor:pointer}.col-head{cursor:pointer}.colname{padding:3px}.colname input{width:135px;border:0;background:transparent;text-align:center;font-weight:bold;color:var(--text);padding:4px}.cell{min-width:135px}.cell input{width:100%;height:33px;border:0;padding:6px 8px;outline:none;background:transparent;color:var(--text)}.cell input:focus{box-shadow:inset 0 0 0 2px #5aa1ed}.selected-cell{background:#dcecff!important}.selected-header{background:#b9d9f7!important;color:#123d67}.status{padding:8px 14px;color:var(--muted);font-size:12px;border-top:1px solid var(--border)}.selection-info{font-weight:bold;color:var(--text);margin-left:12px}.chart-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(280px,1fr);gap:14px;padding:14px}.chart-card{border:1px solid var(--border);border-radius:9px;padding:12px;min-width:0;background:var(--panel-bg)}.chart-card h3{font-size:14px;margin:0 0 8px}.chart-card canvas{width:100%;height:360px;display:block}.graph-settings input[type=color]{height:40px;padding:3px;cursor:pointer}.bottom-actions{padding:14px}.bottom-actions-panel{margin-top:18px}.bottom-actions button{white-space:normal}.stats-wrap{overflow:auto;padding:0 14px 14px}.result .title{margin:12px -14px 0}.chart-grid{grid-template-columns:minmax(0,1.7fr) minmax(260px,1fr)}.chart-card{min-height:0}.stats-table{width:100%;border-collapse:collapse;font-size:13px}.stats-table th,.stats-table td{padding:8px;text-align:right;border:1px solid var(--border);white-space:nowrap}.stats-table th{background:var(--table-head)}.stats-table th:first-child,.stats-table td:first-child{text-align:left}.section-note{padding:0 14px 14px;font-size:12px;color:var(--muted);line-height:1.5}.check{font-size:12px;color:var(--muted)}footer{text-align:center;padding:15px;color:var(--muted);font-size:12px}
+body.theme-light{--page-bg:#fff;--panel-bg:#fff;--text:#222;--muted:#666;--border:#ddd;--title-bg:#fafafa;--table-head:#f0f0f0;--accent:#333;--header1:#555;--header2:#888}body.theme-light .panel{box-shadow:none;border-radius:4px}
+body.theme-dark{--page-bg:#0b1117;--panel-bg:#18232d;--text:#e8f1f8;--muted:#aab9c7;--border:#344756;--title-bg:#1d2b37;--table-head:#213d4a;--accent:#267fc4;--header1:#02070b;--header2:#152a3b}body.theme-dark .selected-cell{background:#28536a!important}body.theme-dark .cell input{color:var(--text)}
+body.theme-minimal{--page-bg:#f8f8f8;--panel-bg:#fff;--text:#222;--muted:#666;--border:#bbb;--title-bg:#e8e8e8;--table-head:#eee;--accent:#444;--header1:#303030;--header2:#555}body.theme-minimal .panel{border-radius:2px;box-shadow:none}body.theme-minimal button{border-radius:2px}
+body.theme-pastel{--page-bg:#fff2f8;--panel-bg:#fffaff;--text:#65465f;--muted:#866f8d;--border:#e8c8df;--title-bg:#ffe6f3;--table-head:#f9e5f5;--accent:#9c5b88;--header1:#9c5b88;--header2:#e09ac6}body.theme-pastel .panel{border-radius:16px;box-shadow:0 8px 22px #b464a01f}body.theme-pastel button{border-radius:18px}
+body.theme-digital{--page-bg:#02090c;--panel-bg:#06171d;--text:#baf7ff;--muted:#8bc4cc;--border:#075866;--title-bg:#09252d;--table-head:#123b45;--accent:#087f91;--header1:#00171e;--header2:#003640}body.theme-digital .panel{box-shadow:0 0 16px #00e5ff14}body.theme-digital .cell input{color:var(--text)}body.theme-digital .selected-cell{background:#28536a!important}
+@media(max-width:900px){.fields{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics{grid-template-columns:repeat(2,1fr)}.chart-grid{grid-template-columns:1fr}}@media(max-width:620px){header{align-items:flex-start;flex-direction:column}h1{font-size:22px}.version-info{text-align:left}.fields{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.hint{width:100%;margin-left:0}.chart-card canvas{height:300px}}
+
+.prediction-panel{border:1px solid var(--border);border-radius:10px;padding:14px;margin:12px 0;background:var(--panel-bg)}
+.prediction-controls{display:grid;grid-template-columns:minmax(180px,1fr) auto;gap:12px;align-items:end;margin:10px 0}
+.prediction-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.prediction-card{border:1px solid var(--border);border-radius:8px;padding:12px;background:var(--card-bg)}
+.prediction-card small{display:block;color:var(--muted);margin-bottom:6px}
+.prediction-card strong{display:block;font-size:1.05rem;overflow-wrap:anywhere}
+.prediction-footnote{font-size:.86rem;color:var(--muted);margin-top:10px}
+@media(max-width:700px){.prediction-results{grid-template-columns:1fr}.prediction-controls{grid-template-columns:1fr}}
+.diagnostics-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.diagnostic-card{border:1px solid var(--border);border-radius:8px;padding:10px;min-width:0;background:var(--panel-bg)}
+.diagnostic-card h3{font-size:13px;margin:0 0 8px;color:var(--text)}
+.diagnostic-card canvas{display:block;width:100%;height:auto;aspect-ratio:1.65/1;background:var(--panel-bg);border-radius:4px}
+.diagnostic-note{font-size:12px;color:var(--muted);line-height:1.5;margin:8px 0 12px}
+.diagnostic-table-wrap{overflow:auto;margin:8px 0 14px}
+.diagnostic-table{width:100%;min-width:760px;border-collapse:collapse;font-size:12px}
+.diagnostic-table th,.diagnostic-table td{padding:7px 8px;border:1px solid var(--border);text-align:right}
+.diagnostic-table th:first-child,.diagnostic-table td:first-child,.diagnostic-table th:last-child,.diagnostic-table td:last-child{text-align:left}
+.diagnostic-table thead th{background:var(--table-head);color:var(--text)}
+.diag-flag{font-weight:bold;color:#b45309}
+@media(max-width:760px){.diagnostics-grid{grid-template-columns:1fr}.metric strong{font-size:16px}}
+@media print{.theme-bar,.header-actions button,.toolbar,.result-actions,.run,footer{display:none!important}body{background:#fff;color:#111}.panel{box-shadow:none;break-inside:avoid}header{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+
+.multi-intro{color:var(--muted);font-size:.92rem;margin:10px 0}
+.multi-layout{display:grid;grid-template-columns:minmax(180px,1fr) minmax(260px,2fr);gap:14px}
+.multi-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;border:1px solid var(--border);border-radius:8px;padding:10px;max-height:180px;overflow:auto}
+.multi-choice{display:flex;align-items:center;gap:7px;font-size:.9rem;overflow-wrap:anywhere}
+.multi-choice input{width:auto}
+.multi-prediction-grid{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:10px}
+.multi-prediction-grid .field input{width:100%;box-sizing:border-box}
+.multi-metrics{margin-top:12px}
+@media(max-width:760px){.multi-layout{grid-template-columns:1fr}.multi-prediction-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.multi-choices{grid-template-columns:1fr}}
+
+.corr-choices{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:6px}
+.corr-method{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:12px 0}
+.corr-method select{max-width:300px}
+.corr-method span{font-size:.86rem;color:var(--muted)}
+.corr-heatmap-wrap{overflow:auto;max-width:100%;padding:4px 0}
+.corr-heatmap{border-collapse:separate;border-spacing:3px;min-width:100%;width:max-content}
+.corr-heatmap th{padding:8px 10px;background:var(--table-head);color:var(--text);font-size:.82rem;text-align:center;max-width:180px;white-space:normal}
+.corr-heatmap td{padding:10px 12px;text-align:center;min-width:92px;border:1px solid var(--border);border-radius:5px;font-weight:600;font-size:.85rem}
+.corr-heatmap td small{display:block;font-weight:400;font-size:.74rem;margin-top:4px}
+.corr-legend{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:.8rem;color:var(--muted);margin:8px 0}
+.corr-legend-swatch{display:inline-block;width:18px;height:12px;border:1px solid var(--border);border-radius:3px}
+@media(max-width:700px){.corr-choices{grid-template-columns:repeat(2,minmax(0,1fr))}.corr-heatmap th,.corr-heatmap td{padding:7px;min-width:80px}}
+</style><script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script></head>
+<body class="theme-blue"><header><div><h1>Regression &amp; Correlation Analyzer</h1><div class="sub">Linear Regression • Pearson Correlation • Statistical Output</div></div><div class="header-actions"><div class="version-info"><div class="version">Version V1.6.1</div><div class="date">Updated: 2026-10-29</div><div class="credit">Developed by Somchard</div></div><button onclick="loadDemo()">Load Demo</button><button onclick="resetAll()">Reset</button></div></header>
+<div class="theme-bar">🎨 Theme <select id="themeSelect" onchange="setTheme(this.value)"><option value="blue">Blue</option><option value="light">Light</option><option value="dark">Dark</option><option value="minimal">Minimal</option><option value="pastel">Pastel</option><option value="digital">Digital</option></select></div>
+<main>
+<div class="panel"><div class="title"><span>📊 Statistical Output</span><small>Simple linear regression with intercept</small></div><div class="result" id="resultArea"><div class="metrics"><div class="metric"><small>Complete Pairs (N)</small><strong id="nMetric">—</strong></div><div class="metric"><small>Pearson Correlation (r)</small><strong id="rMetric">—</strong></div><div class="metric"><small>R-squared</small><strong id="r2Metric">—</strong></div><div class="metric"><small>Regression Equation</small><strong id="eqMetric">—</strong></div></div><div class="notice" id="resultNotice">Enter or paste numeric X and Y data in the worksheet, select the corresponding columns, then click Run Analysis.</div><div class="detail" id="resultDetail">Output includes model summary, ANOVA, coefficients, confidence intervals, t statistics and p-values when calculation is possible.</div>
+<div class="chart-grid"><div class="chart-card" id="chartCard"><h3 id="chartHeading">Regression Plot</h3><canvas id="plot" width="1000" height="650"></canvas></div><div class="chart-card"><h3>Quick Interpretation</h3><div id="interpretation" class="notice">Run the analysis to see the interpretation.</div><div class="detail">Correlation describes linear association, not causation. Check the scatter plot, data quality, residual behavior, and study context before making decisions.</div></div></div>
+<div class="title">Model Summary</div><div class="stats-wrap"><table class="stats-table" id="summaryTable"><thead><tr><th>Source</th><th>N</th><th>R</th><th>R-sq</th><th>Adjusted R-sq</th><th>Residual SE</th></tr></thead><tbody><tr><td>Regression</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr></tbody></table></div>
+<div class="title">ANOVA</div><div class="stats-wrap"><table class="stats-table" id="anovaTable"><thead><tr><th>Source</th><th>DF</th><th>Adj SS</th><th>Adj MS</th><th>F-Value</th><th>P-Value</th></tr></thead><tbody><tr><td>Regression</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>Error</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>Total</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr></tbody></table></div>
+<div class="title">Coefficients</div><div class="stats-wrap"><table class="stats-table" id="coefTable"><thead><tr><th>Term</th><th>Coef</th><th>SE Coef</th><th>T-Value</th><th>P-Value</th><th>Lower CI</th><th>Upper CI</th></tr></thead><tbody><tr><td>Constant</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr></tbody></table></div>
+
+<div class="title"><span>🎯 Prediction &amp; Confidence Intervals</span><small>Simple linear regression prediction</small></div>
+<div class="prediction-panel" id="predictionPanel">
+ <div class="prediction-controls">
+  <div class="field"><label for="predictX">Input/Factor value (X₀)</label><input id="predictX" type="number" step="any" value="30" placeholder="Enter an X value" onkeydown="if(event.key==='Enter')calculatePrediction()"></div>
+  <div><button class="primary" onclick="calculatePrediction()">Calculate Prediction</button></div>
+ </div>
+ <div class="prediction-results">
+  <div class="prediction-card"><small>Predicted Output (Ŷ)</small><strong id="predY">—</strong></div>
+  <div class="prediction-card"><small>Confidence Interval for Mean Output</small><strong id="predCI">—</strong></div>
+  <div class="prediction-card"><small>Prediction Interval for Individual Output</small><strong id="predPI">—</strong></div>
+ </div>
+ <div class="prediction-footnote" id="predictionNote">Run Analysis first. Confidence level follows the Confidence Level selected in Analysis Setup. Prediction intervals are wider than confidence intervals for the mean because they include individual-response variation.</div>
+</div>
+
+<div class="title"><span>🔎 Regression Diagnostics</span><small>Residual checks and influence screening</small></div>
+<div class="diagnostics-grid">
+ <div class="diagnostic-card"><h3>Residuals vs Order</h3><canvas id="diagOrder" width="900" height="540"></canvas></div>
+ <div class="diagnostic-card"><h3>Normal Probability Plot</h3><canvas id="diagNormal" width="900" height="540"></canvas></div>
+ <div class="diagnostic-card"><h3>Residuals vs Fitted Values</h3><canvas id="diagFitted" width="900" height="540"></canvas></div>
+ <div class="diagnostic-card"><h3>Histogram of Residuals</h3><canvas id="diagHist" width="900" height="540"></canvas></div>
+</div>
+<div class="diagnostic-note" id="diagnosticSummary">Run analysis to calculate residual diagnostics. Screening thresholds are indicators for review, not automatic reasons to delete observations.</div>
+<div class="title">Outlier / Influential Point Screening <small>Rows flagged by at least one screening threshold</small></div>
+<div class="diagnostic-table-wrap"><table class="diagnostic-table" id="diagnosticTable"><thead><tr><th>Worksheet Row</th><th>Observed Y</th><th>Fitted Y</th><th>Residual</th><th>Standardized Residual</th><th>Leverage</th><th>Cook's Distance</th><th>Flag</th></tr></thead><tbody><tr><td colspan="8" style="text-align:left">Run Analysis to calculate diagnostics.</td></tr></tbody></table></div>
+<div class="section-note">Statistical note: this version fits ordinary least-squares simple linear regression. P-values and confidence intervals use a Student t distribution approximation. Results require at least 3 complete numeric X/Y pairs and nonzero variation in X. This is a screening/analysis aid, not a substitute for checking assumptions and residuals.</div>
+</div><div class="result-actions bottom-actions"><button onclick="copyResult()">📋 Copy Result</button><button onclick="copyResultImage()">🖼️ Copy Result as Image</button><button onclick="downloadResultImage()">⬇️ Download Result PNG</button><button onclick="copyChartImage()">📈 Copy Graph Image</button><button onclick="downloadChartImage()">⬇️ Download Graph PNG</button><button onclick="copySelectedData()">📑 Copy Selected Data</button><button onclick="window.print()">🖨 Print Result</button></div></div>
+<div class="panel"><div class="title"><span>🎨 Graph Settings</span><small>Customize plot colors and appearance</small></div><div class="fields graph-settings">
+<div class="field"><label>Data Point Color</label><input type="color" id="pointColor" value="#d97706" onchange="drawChart();renderDiagnostics()"></div>
+<div class="field"><label>Regression Line Color</label><input type="color" id="lineColor" value="#176dbf" onchange="drawChart();renderDiagnostics()"></div>
+<div class="field"><label>Confidence Band Color</label><input type="color" id="bandColor" value="#176dbf" onchange="drawChart();renderDiagnostics()"></div>
+<div class="field"><label>Grid / Axis Guide Color</label><input type="color" id="gridColor" value="#d9e2ec" onchange="drawChart();renderDiagnostics()"></div>
+</div></div>
+<div class="panel"><div class="title">⚙️ Analysis Setup <small>Choose worksheet columns and chart options</small></div><div class="fields">
+<div class="field"><label>X Variable (Predictor)</label><select id="xCol" onchange="updateChartOnly()"></select></div><div class="field"><label>Y Variable (Response)</label><select id="yCol" onchange="updateChartOnly()"></select></div><div class="field"><label>Confidence Level</label><select id="confidence"><option value="0.90">90%</option><option value="0.95" selected>95%</option><option value="0.99">99%</option></select></div><div class="field"><label>Chart Style</label><select id="chartStyle" onchange="drawChart();renderDiagnostics()"><option value="points-line">Scatter + Regression Line</option><option value="points">Scatter Only</option><option value="line">Connected Points + Fit</option></select></div>
+<div class="field"><label>X Axis Label</label><input id="xLabel" value="X" oninput="drawChart()"></div><div class="field"><label>Y Axis Label</label><input id="yLabel" value="Y" oninput="drawChart()"></div><div class="field"><label>Chart Title</label><input id="chartTitle" value="Regression Plot" oninput="drawChart()"></div><div class="field"><label>Show Confidence Band</label><select id="showBand" onchange="drawChart();renderDiagnostics()"><option value="yes">Yes</option><option value="no">No</option></select></div>
+</div><div class="run"><button onclick="loadDemo()">Load Demo Data</button> <button class="primary" onclick="runAnalysis()">▶ Run Analysis</button></div></div>
+
+
+<div class="panel" id="multiRegressionPanel">
+ <div class="title"><span>🧮 Multiple Regression</span><small>Ordinary least squares with intercept</small></div>
+ <div class="multi-intro">Select one or more Input/Factor columns and one Output column. This analysis runs separately from the Simple Linear Regression output above.</div>
+ <div class="multi-layout">
+  <div class="field"><label for="multiYCol">Response (Y)</label><select id="multiYCol" onchange="updateMultiPredictionInputs()"></select></div>
+  <div class="field"><label>Predictors (X)</label><div id="multiXChoices" class="multi-choices"></div></div>
+ </div>
+ <div class="run"><button onclick="selectDefaultMultiPredictors()">Select Input/Factor 1–4</button> <button class="primary" onclick="runMultipleRegression()">▶ Run Multiple Regression</button></div>
+ <div id="multiNotice" class="notice">Load Demo Data or select worksheet columns, then run Multiple Regression.</div>
+ <div class="metrics multi-metrics">
+  <div class="metric"><small>Complete Rows (N)</small><strong id="multiN">—</strong></div>
+  <div class="metric"><small>R-squared</small><strong id="multiR2">—</strong></div>
+  <div class="metric"><small>Adjusted R-squared</small><strong id="multiAdjR2">—</strong></div>
+  <div class="metric"><small>Model F p-value</small><strong id="multiP">—</strong></div>
+ </div>
+ <div class="title">Multiple Regression Model Summary</div>
+ <div class="stats-wrap"><table class="stats-table" id="multiSummary"><thead><tr><th>N</th><th>Predictors</th><th>R-sq</th><th>Adjusted R-sq</th><th>Residual SE</th><th>DF Error</th></tr></thead><tbody><tr><td colspan="6">Run Multiple Regression.</td></tr></tbody></table></div>
+ <div class="title">Multiple Regression ANOVA</div>
+ <div class="stats-wrap"><table class="stats-table" id="multiAnova"><thead><tr><th>Source</th><th>DF</th><th>Adj SS</th><th>Adj MS</th><th>F-Value</th><th>P-Value</th></tr></thead><tbody><tr><td colspan="6">Run Multiple Regression.</td></tr></tbody></table></div>
+ <div class="title">Multiple Regression Coefficients</div>
+ <div class="stats-wrap"><table class="stats-table" id="multiCoef"><thead><tr><th>Term</th><th>Coef</th><th>SE Coef</th><th>T-Value</th><th>P-Value</th><th>Lower CI</th><th>Upper CI</th><th>VIF</th></tr></thead><tbody><tr><td colspan="8">Run Multiple Regression.</td></tr></tbody></table></div>
+ <div class="title">Multiple Regression Prediction</div>
+ <div id="multiPredictionInputs" class="multi-prediction-grid"></div>
+ <div class="run"><button class="primary" onclick="calculateMultiplePrediction()">Calculate Multiple Prediction</button></div>
+ <div class="prediction-results">
+  <div class="prediction-card"><small>Predicted Output (Ŷ)</small><strong id="multiPredY">—</strong></div>
+  <div class="prediction-card"><small>Prediction Status</small><strong id="multiPredStatus">—</strong></div>
+ </div>
+ <div id="multiPredNote" class="prediction-footnote">Run Multiple Regression to enable prediction.</div>
+ <div class="section-note">Multiple regression uses complete numeric rows across the selected response and predictors. VIF is calculated by regressing each predictor against the other selected predictors. Small samples, multicollinearity, influential observations, and model assumptions should be reviewed before drawing conclusions.</div>
+ <div class="result-actions bottom-actions multi-copy-actions" id="multiCopyActions">
+  <button onclick="copyMultipleResult()">📋 Copy Multiple Regression Result</button>
+  <button onclick="copyMultipleResultImage()">🖼️ Copy Result as Image</button>
+  <button onclick="downloadMultipleResultImage()">⬇️ Download Result PNG</button>
+ </div>
+ <div id="multiCopyStatus" class="prediction-footnote" aria-live="polite"></div>
+
+</div>
+
+
+<div class="panel" id="correlationPanel">
+ <div class="title"><span>🔗 Correlation Matrix</span><small>Pearson and Spearman</small></div>
+ <div class="notice" id="corrFeatureGuide"><b>Where to find the features:</b> Select at least two variables and click <b>Calculate Correlation Matrix</b>. The Heatmap and pairwise missing-data summary will appear below.</div>
+ <div class="multi-intro">Select numeric columns to compare. Pearson measures linear association; Spearman measures monotonic association using ranked values.</div>
+ <div class="field"><label>Variables to include</label><div id="corrChoices" class="multi-choices corr-choices"></div></div>
+ <div class="run"><button onclick="selectDefaultCorrelationColumns()">Select Input/Factor 1–4 + Output</button> <button class="primary" onclick="runCorrelationMatrix()">▶ Calculate Correlation Matrix</button></div>
+ <div class="notice" id="corrNotice">Load Demo Data or select numeric columns, then calculate the correlation matrix.</div>
+ <div class="corr-method">
+  <label for="corrMethod">Correlation method</label>
+  <select id="corrMethod" onchange="renderCorrelationMatrix()">
+   <option value="pearson">Pearson correlation (r)</option>
+   <option value="spearman">Spearman rank correlation (ρ)</option>
+  </select>
+  <span id="corrMethodNote">Each cell shows the coefficient and its p-value.</span>
+ </div>
+ <div class="title"><span>🎨 Heatmap — Correlation Coefficient Matrix</span></div>
+ <div class="section-note">Each colored cell shows the correlation coefficient, p-value, and N used for that variable pair. Teal indicates positive correlation; red indicates negative correlation. Stronger colors indicate larger absolute coefficients.</div>
+ <div class="corr-heatmap-wrap" id="corrHeatmapWrap"><div class="section-note"><b>Heatmap is generated after calculation.</b><br>1. Select at least two columns above.<br>2. Click <b>Calculate Correlation Matrix</b>.<br>3. The colored matrix will appear here, followed by the Pairwise Missing Data summary.</div></div>
+ <div class="title"><span>🧩 Pairwise Missing Data</span></div>
+ <div class="section-note" id="corrMissingSummary">After calculating the matrix, this section reports the number of valid observations used for each pair. Each pair excludes rows where either selected variable is blank or non-numeric; different pairs may therefore use different N values.</div>
+ <div class="title"><span>📋 Correlation Details</span></div>
+ <div class="stats-wrap"><table class="stats-table" id="corrDetails"><thead><tr><th>Variable 1</th><th>Variable 2</th><th>N</th><th>Coefficient</th><th>P-Value</th><th>Interpretation</th></tr></thead><tbody><tr><td colspan="6">No results yet.</td></tr></tbody></table></div>
+ <div class="section-note" id="corrWarning">Use correlation to describe association, not causation. A high correlation between predictors may indicate multicollinearity. P-values for Spearman use a t-based approximation, particularly approximate for small samples or tied ranks.</div>
+ <div class="result-actions bottom-actions corr-copy-actions" id="corrCopyActions">
+  <button onclick="copyCorrelationResult()">📋 Copy Correlation Result</button>
+  <button onclick="copyCorrelationResultImage()">🖼️ Copy Result as Image</button>
+  <button onclick="downloadCorrelationResultImage()">⬇️ Download Result PNG</button>
+ </div>
+ <div id="corrCopyStatus" class="prediction-footnote" aria-live="polite"></div>
+</div>
+
+<div class="panel"><div class="title"><span>📋 Data Worksheet</span><small>100 Rows × 10 Columns • Excel-style Copy/Paste</small></div><div class="toolbar"><button onclick="addRow()">＋ Row</button><button onclick="delRow()">− Row</button><button onclick="addCol()">＋ Col</button><button onclick="delCol()">− Col</button><button id="undoBtn" onclick="undo()">↶ Undo</button><button id="redoBtn" onclick="redo()">↷ Redo</button><button onclick="clearSelectedRange()">Clear Selected</button><button onclick="clearAll()">Clear All</button><button onclick="exportCSV()">Export CSV</button><span class="hint">Paste from Excel • Drag/Shift+Click selection • Enter ↓ • Tab →</span></div><div class="sheet" id="sheet"></div><div class="status"><span id="statusText">100 rows × 10 columns</span><span id="selectionInfo" class="selection-info">Selected: Row 1 / Column 1</span></div></div>
+</main><footer>Regression &amp; Correlation Analyzer V1.6.1 · Developed by Somchard</footer>
+<script>
+const DEFAULT_ROWS=100,DEFAULT_COLS=10,THEMES=['blue','light','dark','minimal','pastel','digital'];let R=DEFAULT_ROWS,C=DEFAULT_COLS,D=[],H=[],hist=[],future=[],selectionStart={r:0,c:0},selectionEnd={r:0,c:0},isSelecting=false,lastModel=null;
+const $=id=>document.getElementById(id);function colName(i){return 'Column '+String.fromCharCode(65+i)}function initData(){D=Array.from({length:R},()=>Array(C).fill(''));H=Array.from({length:C},(_,i)=>colName(i))}initData();
+function setTheme(n){THEMES.forEach(t=>document.body.classList.remove('theme-'+t));document.body.classList.add('theme-'+n);$('themeSelect').value=n;try{localStorage.setItem('regCorrTheme',n)}catch(e){}if(typeof drawChart==='function')drawChart();if(typeof renderDiagnostics==='function')renderDiagnostics()}
+function snapshot(){return JSON.stringify({D,H,R,C})}function save(){hist.push(snapshot());if(hist.length>50)hist.shift();future=[];updateUndo()}function restore(s){const o=JSON.parse(s);D=o.D;H=o.H;R=o.R;C=o.C;render();updateUndo();populateSelectors()}function undo(){if(hist.length){future.push(snapshot());restore(hist.pop())}}function redo(){if(future.length){hist.push(snapshot());restore(future.pop())}}function updateUndo(){$('undoBtn').disabled=!hist.length;$('redoBtn').disabled=!future.length}
+function esc(s){return String(s??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function render(){let x='<table><thead><tr><th class="corner" onclick="selectAll()">↘</th>';H.forEach((h,c)=>x+=`<th class="col-head" data-c="${c}" onclick="selectColumn(${c})"><div class="colname"><input aria-label="Column ${c+1} name" value="${esc(h)}" onchange="renameCol(${c},this.value)" onclick="event.stopPropagation()"></div></th>`);x+='</tr></thead><tbody>';D.forEach((row,r)=>{x+=`<tr><th class="rowhead" onclick="selectRow(${r})">${r+1}</th>`;row.forEach((v,c)=>x+=`<td class="cell" data-r="${r}" data-c="${c}" onmousedown="startSelection(event,${r},${c})" onmouseenter="extendSelection(${r},${c})" onclick="cellClick(event,${r},${c})"><input value="${esc(v)}" data-r="${r}" data-c="${c}" onfocus="beginCellEdit(this,${r},${c})" oninput="editCellLive(this)" onkeydown="navigate(event,this)" onpaste="pasteCells(event,this)"></td>`);x+='</tr>'});x+='</tbody></table>';$('sheet').innerHTML=x;$('statusText').textContent=`${R} rows × ${C} columns`;$('selectionInfo').textContent=`Selected: Row 1 / ${H[0]}`;paintSelection();updateUndo()}
+let editingCellKey='';function beginCellEdit(input,r,c){const key=`${r}:${c}`;if(editingCellKey!==key){save();editingCellKey=key}selectionStart={r,c};selectionEnd={r,c};paintSelection()}function editCellLive(input){const r=+input.dataset.r,c=+input.dataset.c;if(r>=0&&r<R&&c>=0&&c<C){D[r][c]=input.value;populateSelectors(false)}}function syncInputs(){document.querySelectorAll('#sheet input[data-r][data-c]').forEach(i=>{D[+i.dataset.r][+i.dataset.c]=i.value})}
+function normalize(){const e=selectionEnd||selectionStart;return{r1:Math.min(selectionStart.r,e.r),r2:Math.max(selectionStart.r,e.r),c1:Math.min(selectionStart.c,e.c),c2:Math.max(selectionStart.c,e.c)}}function paintSelection(){document.querySelectorAll('.selected-cell,.selected-header').forEach(e=>e.classList.remove('selected-cell','selected-header'));const q=normalize();for(let r=q.r1;r<=q.r2;r++)for(let c=q.c1;c<=q.c2;c++){const el=document.querySelector(`.cell[data-r="${r}"][data-c="${c}"]`);if(el)el.classList.add('selected-cell')}if(q.r1===0&&q.r2===R-1)document.querySelectorAll('.col-head').forEach(el=>{if(+el.dataset.c>=q.c1&&+el.dataset.c<=q.c2)el.classList.add('selected-header')});$('selectionInfo').textContent=`Selected: R${q.r1+1}:R${q.r2+1} × C${q.c1+1}:C${q.c2+1}`}
+function startSelection(e,r,c){if(e.button!==0)return;isSelecting=true;selectionStart={r,c};selectionEnd={r,c};paintSelection()}function extendSelection(r,c){if(isSelecting){selectionEnd={r,c};paintSelection()}}function cellClick(e,r,c){if(e.shiftKey){selectionEnd={r,c};paintSelection()}const i=document.querySelector(`#sheet input[data-r="${r}"][data-c="${c}"]`);if(i)i.focus()}document.addEventListener('mouseup',()=>isSelecting=false);
+function focusCell(r,c,selectText=false){r=Math.max(0,Math.min(R-1,r));c=Math.max(0,Math.min(C-1,c));selectionStart={r,c};selectionEnd={r,c};paintSelection();const i=document.querySelector(`#sheet input[data-r="${r}"][data-c="${c}"]`);if(i){i.focus();if(selectText)i.select()}}
+function navigate(e,i){let r=+i.dataset.r,c=+i.dataset.c,nr=r,nc=c,ok=true;if(e.key==='ArrowUp')nr=Math.max(0,r-1);else if(e.key==='ArrowDown')nr=Math.min(R-1,r+1);else if(e.key==='ArrowLeft')nc=Math.max(0,c-1);else if(e.key==='ArrowRight')nc=Math.min(C-1,c+1);else if(e.key==='Enter')nr=Math.min(R-1,r+(e.shiftKey?-1:1));else if(e.key==='Tab')nc=Math.max(0,Math.min(C-1,c+(e.shiftKey?-1:1)));else ok=false;if(ok){e.preventDefault();focusCell(nr,nc,true)}}
+function pasteCells(e,input){const raw=(e.clipboardData||window.clipboardData)?.getData('text/plain');if(!raw)return;e.preventDefault();save();const sr=+input.dataset.r,sc=+input.dataset.c,lines=raw.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n');if(lines.at(-1)==='')lines.pop();const mat=lines.map(l=>l.split('\t'));while(R<sr+mat.length){D.push(Array(C).fill(''));R++}const need=sc+Math.max(...mat.map(a=>a.length));while(C<need){H.push(colName(C));C++;D.forEach(row=>row.push(''))}mat.forEach((row,ri)=>row.forEach((v,ci)=>D[sr+ri][sc+ci]=v));selectionStart={r:sr,c:sc};selectionEnd={r:sr+mat.length-1,c:need-1};render();populateSelectors();$('statusText').textContent=`Pasted ${mat.length} row(s)`}
+document.addEventListener('copy',e=>{const q=normalize(),active=document.activeElement;if(active&&active.matches('#sheet .cell input')&&q.r1===q.r2&&q.c1===q.c2&&active.selectionStart!==active.selectionEnd)return;const rows=[];for(let r=q.r1;r<=q.r2;r++)rows.push(D[r].slice(q.c1,q.c2+1).map(v=>String(v??'')).join('\t'));e.clipboardData.setData('text/plain',rows.join('\n'));e.preventDefault()});document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();undo()}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){e.preventDefault();redo()}if((e.key==='Delete'||e.key==='Backspace')&&document.activeElement?.matches('#sheet input[data-r][data-c]')){const q=normalize();if(q.r1!==q.r2||q.c1!==q.c2){e.preventDefault();clearSelectedRange()}}});
+function selectColumn(c){selectionStart={r:0,c};selectionEnd={r:R-1,c};paintSelection()}function selectRow(r){selectionStart={r,c:0};selectionEnd={r,c:C-1};paintSelection()}function selectAll(){selectionStart={r:0,c:0};selectionEnd={r:R-1,c:C-1};paintSelection()}function addRow(){save();D.push(Array(C).fill(''));R++;render()}function delRow(){if(R<=1)return;save();D.pop();R--;render()}function addCol(){save();C++;H.push(colName(C-1));D.forEach(r=>r.push(''));render();populateSelectors()}function delCol(){if(C<=2)return;save();C--;H.pop();D.forEach(r=>r.pop());render();populateSelectors()}function clearSelectedRange(){const q=normalize();save();for(let r=q.r1;r<=q.r2;r++)for(let c=q.c1;c<=q.c2;c++)D[r][c]='';render();populateSelectors()}function clearAll(){save();D=Array.from({length:R},()=>Array(C).fill(''));render();populateSelectors()}function renameCol(c,v){save();H[c]=v.trim()||colName(c);render();populateSelectors()}
+function exportCSV(){syncInputs();const rows=[['Row',...H],...D.map((r,i)=>[i+1,...r])];const csv='\ufeff'+rows.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');downloadBlob(csv,'Regression-Correlation-Data.csv','text/csv;charset=utf-8')}
+function downloadBlob(data,name,type){const b=new Blob([data],{type}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1200)}function copySelectedData(){syncInputs();const q=normalize(),txt=Array.from({length:q.r2-q.r1+1},(_,i)=>D[q.r1+i].slice(q.c1,q.c2+1).join('\t')).join('\n');navigator.clipboard?.writeText(txt).then(()=>alert('Selected worksheet data copied.')).catch(()=>fallbackCopy(txt))}function fallbackCopy(t){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}
+function populateSelectors(preserve=true){const x=$('xCol').value,y=$('yCol').value;const opts=H.map((h,i)=>`<option value="${i}">${esc(h||colName(i))}</option>`).join('');$('xCol').innerHTML=opts;$('yCol').innerHTML=opts;if(preserve&&x<C)$('xCol').value=x;else $('xCol').value='0';if(preserve&&y<C&&y!==x)$('yCol').value=y;else $('yCol').value=String(Math.min(1,C-1));$('xLabel').placeholder=H[+$('xCol').value]||'X';$('yLabel').placeholder=H[+$('yCol').value]||'Y';if($('multiYCol'))renderMultiSelectors(preserve);if($('corrChoices'))renderCorrelationSelectors(preserve)}
+function loadDemo(){
+ save();R=100;C=10;initData();
+ H=['Input/Factor 1','Input/Factor 2','Input/Factor 3','Input/Factor 4','Output','Column F','Column G','Column H','Column I','Column J'];
+ const x1=[20,22,24,26,28,30,32,34,36,38,40,42];
+ const x2=[12,17,13,20,16,22,18,25,21,27,23,30];
+ const x3=[5,8,6,10,7,12,9,13,11,15,12,17];
+ const x4=[100,95,110,102,120,108,125,115,130,122,140,128];
+ const noise=[-1.2,0.8,-0.5,1.4,-0.7,0.3,1.1,-1.0,0.6,-0.4,1.3,-0.8];
+ for(let i=0;i<x1.length;i++){
+   D[i][0]=x1[i];D[i][1]=x2[i];D[i][2]=x3[i];D[i][3]=x4[i];
+   D[i][4]=Number((8+1.15*x1[i]-0.72*x2[i]+0.48*x3[i]+0.16*x4[i]+noise[i]).toFixed(3));
+ }
+ render();populateSelectors(false);
+ $('xCol').value='0';$('yCol').value='4';
+ $('xLabel').value='Input/Factor 1';$('yLabel').value='Output';$('chartTitle').value='Output vs Input/Factor 1';
+ $('statusText').textContent='Demo loaded: 12 complete rows; Input/Factor 1–4 and Output';
+ renderMultiSelectors(false);selectDefaultMultiPredictors();runAnalysis();runMultipleRegression();
+}
+function resetAll(){R=DEFAULT_ROWS;C=DEFAULT_COLS;initData();hist=[];future=[];lastModel=null;render();populateSelectors(false);renderMultiSelectors(false);$('xLabel').value='Input/Factor 1';$('yLabel').value='Output';$('chartTitle').value='Regression Plot';$('nMetric').textContent=$('rMetric').textContent=$('r2Metric').textContent=$('eqMetric').textContent='—';$('resultNotice').textContent='Enter or paste numeric X and Y data in the worksheet, select the corresponding columns, then click Run Analysis.';$('interpretation').textContent='Run the analysis to see the interpretation.';resetTables();drawChart();renderDiagnostics();calculatePrediction();updateUndo()}
+function resetTables(){$('summaryTable').querySelector('tbody').innerHTML='<tr><td>Regression</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>';$('anovaTable').querySelector('tbody').innerHTML='<tr><td>Regression</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>Error</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>Total</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>';$('coefTable').querySelector('tbody').innerHTML='<tr><td>Constant</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td id="xTerm">X</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>'}
+function mean(a){return a.reduce((s,v)=>s+v,0)/a.length}function sum(a){return a.reduce((s,v)=>s+v,0)}function fmt(x,d=4){return Number.isFinite(x)?x.toFixed(d):'N/A'}
+function logGamma(z){const p=[676.5203681218851,-1259.1392167224028,771.3234287776531,-176.6150291621406,12.507343278686905,-0.13857109526572012,9.984369578019572e-6,1.5056327351493116e-7];if(z<0.5)return Math.log(Math.PI)-Math.log(Math.sin(Math.PI*z))-logGamma(1-z);z-=1;let x=0.99999999999980993;for(let i=0;i<p.length;i++)x+=p[i]/(z+i+1);const t=z+p.length-0.5;return 0.5*Math.log(2*Math.PI)+(z+0.5)*Math.log(t)-t+Math.log(x)}function betacf(a,b,x){const MAX=200,EPS=3e-14,FPMIN=1e-300;let qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap;if(Math.abs(d)<FPMIN)d=FPMIN;d=1/d;let h=d;for(let m=1;m<=MAX;m++){let m2=2*m,aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;h*=d*c;aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;const del=d*c;h*=del;if(Math.abs(del-1)<EPS)break}return h}function ibeta(x,a,b){if(x<=0)return 0;if(x>=1)return 1;const bt=Math.exp(logGamma(a+b)-logGamma(a)-logGamma(b)+a*Math.log(x)+b*Math.log1p(-x));if(x<(a+1)/(a+b+2))return bt*betacf(a,b,x)/a;return 1-bt*betacf(b,a,1-x)/b}function tTwoTail(t,df){if(!Number.isFinite(t)||df<=0)return NaN;const x=df/(df+t*t);return Math.max(0,Math.min(1,ibeta(x,df/2,0.5)))}function tCritical(conf,df){let lo=0,hi=100;for(let i=0;i<100;i++){const m=(lo+hi)/2;if(tTwoTail(m,df)>1-conf)lo=m;else hi=m}return (lo+hi)/2}
+
+
+
+let lastCorrelation=null;
+function renderCorrelationSelectors(preserve=true){
+ const box=$('corrChoices');if(!box)return;
+ const checked=new Set(preserve?Array.from(box.querySelectorAll('input:checked')).map(e=>e.value):[]);
+ box.innerHTML=H.map((name,i)=>`<label class="multi-choice"><input type="checkbox" value="${i}" ${checked.has(String(i))?'checked':''} onchange="lastCorrelation=null"> ${esc(name||colName(i))}</label>`).join('');
+}
+function selectDefaultCorrelationColumns(){
+ const defaults=[0,1,2,3,4].filter(i=>i<C);
+ document.querySelectorAll('#corrChoices input').forEach(e=>e.checked=defaults.includes(+e.value));
+}
+function rankValues(values){
+ const order=values.map((v,i)=>({v,i})).sort((a,b)=>a.v-b.v);
+ const ranks=Array(values.length);
+ for(let i=0;i<order.length;){
+   let j=i+1;while(j<order.length&&order[j].v===order[i].v)j++;
+   const avg=((i+1)+j)/2;
+   for(let k=i;k<j;k++)ranks[order[k].i]=avg;
+   i=j;
+ }
+ return ranks;
+}
+function pearsonR(a,b){
+ if(a.length!==b.length||a.length<2)return NaN;
+ const ma=mean(a),mb=mean(b);
+ const da=a.map(v=>v-ma),db=b.map(v=>v-mb);
+ const den=Math.sqrt(sum(da.map(v=>v*v))*sum(db.map(v=>v*v)));
+ return den===0?NaN:sum(da.map((v,i)=>v*db[i]))/den;
+}
+function corrPValue(r,n){
+ if(!Number.isFinite(r)||n<3)return NaN;
+ if(Math.abs(r)>=1-1e-14)return 0;
+ const t=Math.abs(r)*Math.sqrt((n-2)/(1-r*r));
+ return tTwoTail(t,n-2);
+}
+function correlationPair(colA,colB,method){
+ const vals=D.map((row,i)=>({row:i+1,a:String(row[colA]??'').trim(),b:String(row[colB]??'').trim()}))
+  .filter(o=>o.a!==''&&o.b!==''&&Number.isFinite(Number(o.a))&&Number.isFinite(Number(o.b)));
+ const a=vals.map(o=>Number(o.a)),b=vals.map(o=>Number(o.b));
+ if(a.length<3)return {n:a.length,r:NaN,p:NaN};
+ const aa=method==='spearman'?rankValues(a):a;
+ const bb=method==='spearman'?rankValues(b):b;
+ const r=pearsonR(aa,bb);
+ return {n:a.length,r,p:corrPValue(r,a.length)};
+}
+function corrInterpret(r){
+ if(!Number.isFinite(r))return 'Not calculable';
+ const a=Math.abs(r),strength=a>=.8?'Very strong':a>=.6?'Strong':a>=.4?'Moderate':a>=.2?'Weak':'Very weak';
+ return (r>0?strength+' positive':r<0?strength+' negative':'No')+(a<.2?' association':' association');
+}
+function corrColor(r){
+ if(!Number.isFinite(r))return {bg:'var(--panel-bg)',fg:'var(--muted)'};
+ const strength=Math.abs(r);
+ if(r>=0)return {bg:`rgba(13,148,136,${.12+.72*strength})`,fg:strength>.52?'#ffffff':'var(--text)'};
+ return {bg:`rgba(220,70,70,${.12+.72*strength})`,fg:strength>.52?'#ffffff':'var(--text)'};
+}
+function runCorrelationMatrix(){
+ syncInputs();
+ const cols=Array.from(document.querySelectorAll('#corrChoices input:checked')).map(e=>+e.value);
+ if(cols.length<2){$('corrNotice').textContent='Select at least two columns.';return}
+ lastCorrelation={cols,method:$('corrMethod').value,pairs:{}};
+ for(let i=0;i<cols.length;i++)for(let j=i;j<cols.length;j++){
+   const key=cols[i]+':'+cols[j];
+   lastCorrelation.pairs[key]=i===j?{n:D.filter(row=>String(row[cols[i]]??'').trim()!==''&&Number.isFinite(Number(row[cols[i]]))).length,r:1,p:0}:
+     correlationPair(cols[i],cols[j],lastCorrelation.method);
+ }
+ $('corrNotice').textContent=`Correlation analysis ready for ${cols.length} selected variables. Pairwise complete numeric observations are used for each pair.`;
+ renderCorrelationMatrix();
+}
+function renderCorrelationMatrix(){
+ if(!lastCorrelation)return;
+ const method=$('corrMethod').value;
+ // Recalculate on method change to ensure rank correlation and p-values match the selected method.
+ if(method!==lastCorrelation.method){
+   lastCorrelation.method=method;lastCorrelation.pairs={};
+   const cols=lastCorrelation.cols;
+   for(let i=0;i<cols.length;i++)for(let j=i;j<cols.length;j++){
+    const key=cols[i]+':'+cols[j];
+    lastCorrelation.pairs[key]=i===j?{n:D.filter(row=>String(row[cols[i]]??'').trim()!==''&&Number.isFinite(Number(row[cols[i]]))).length,r:1,p:0}:correlationPair(cols[i],cols[j],method);
+   }
+ }
+ const cols=lastCorrelation.cols,heads=cols.map(c=>H[c]||colName(c));
+ const cell=(a,b)=>{
+   const key=Math.min(a,b)+':'+Math.max(a,b),v=lastCorrelation.pairs[key]||{n:0,r:NaN,p:NaN};
+   return {v,...corrColor(v.r)};
+ };
+ let table='<table class="corr-heatmap"><thead><tr><th>Variable</th>'+heads.map(h=>`<th>${esc(h)}</th>`).join('')+'</tr></thead><tbody>';
+ cols.forEach((c,i)=>{
+  table+=`<tr><th>${esc(heads[i])}</th>`;
+  cols.forEach((d,j)=>{
+   const v=cell(c,d).v,col=corrColor(v.r);
+   table+=`<td style="background:${col.bg};color:${col.fg}">${Number.isFinite(v.r)?v.r.toFixed(4):'—'}<small>p ${Number.isFinite(v.p)?(v.p<.00001?'<0.00001':v.p.toFixed(5)):'—'} · n=${v.n}</small></td>`;
+  });
+  table+='</tr>';
+ });
+ table+='</tbody></table><div class="corr-legend"><span class="corr-legend-swatch" style="background:rgba(13,148,136,.8)"></span> Positive <span class="corr-legend-swatch" style="background:rgba(220,70,70,.8)"></span> Negative <span>Color intensity indicates |coefficient|.</span></div>';
+ $('corrHeatmapWrap').innerHTML=table;
+ $('corrMethodNote').textContent=method==='pearson'?'Cells show Pearson r and two-sided p-value.':'Cells show Spearman ρ (Pearson correlation of average ranks) and approximate two-sided p-value.';
+ let rows='';
+ for(let i=0;i<cols.length;i++)for(let j=i+1;j<cols.length;j++){
+  const v=cell(cols[i],cols[j]).v;
+  rows+=`<tr><td>${esc(heads[i])}</td><td>${esc(heads[j])}</td><td>${v.n}</td><td>${Number.isFinite(v.r)?v.r.toFixed(6):'—'}</td><td>${Number.isFinite(v.p)?v.p.toFixed(6):'—'}</td><td>${esc(corrInterpret(v.r))}</td></tr>`;
+ }
+ $('corrDetails').querySelector('tbody').innerHTML=rows||'<tr><td colspan="6">Select at least two variables.</td></tr>';
+ const pairCounts=[];
+ for(let i=0;i<cols.length;i++)for(let j=i+1;j<cols.length;j++){
+   const v=cell(cols[i],cols[j]).v;
+   pairCounts.push(`${heads[i]} ↔ ${heads[j]}: N=${v.n}`);
+ }
+ const totalRows=D.length;
+ const completeRows=D.filter(row=>cols.every(c=>String(row[c]??'').trim()!==''&&Number.isFinite(Number(row[c])))).length;
+ $('corrMissingSummary').innerHTML=`<b>Pairwise complete observations are enabled.</b> Each variable pair is calculated using rows with valid numeric values for those two variables only. Worksheet rows: ${totalRows}; rows complete across all selected variables: ${completeRows}.<br><b>Valid N per pair:</b> ${pairCounts.map(esc).join(' · ')}`;
+
+}
+function correlationResultText(){
+ if(!lastCorrelation)return 'Correlation Matrix: no completed analysis. Calculate Correlation Matrix first.';
+ return 'CORRELATION MATRIX RESULT\nMethod: '+($('corrMethod').value==='spearman'?'Spearman rank correlation (rho)':'Pearson correlation (r)')+
+ '\nVariables: '+lastCorrelation.cols.map(c=>H[c]||colName(c)).join(', ')+
+ '\n\nHEATMAP\n'+$('corrHeatmapWrap').innerText+
+ '\n\nPAIRWISE DETAILS\n'+$('corrDetails').innerText+
+ '\n\nNOTES\n'+$('corrWarning').innerText;
+}
+async function copyCorrelationResult(){
+ const txt=correlationResultText();
+ try{if(navigator.clipboard&&navigator.clipboard.writeText)await navigator.clipboard.writeText(txt);else fallbackCopy(txt);
+ $('corrCopyStatus').textContent='Correlation result copied as text.'}
+ catch(e){fallbackCopy(txt);$('corrCopyStatus').textContent='Copy attempted using browser fallback. If clipboard access is blocked, select and copy manually.'}
+}
+async function makeCorrelationResultCanvas(){
+ return await html2canvas($('correlationPanel'),{
+  backgroundColor:getComputedStyle(document.body).getPropertyValue('--panel-bg').trim()||'#071a1f',
+  scale:2,useCORS:true,
+  ignoreElements:el=>el.classList?.contains('corr-copy-actions')||el.classList?.contains('run')||el.id==='corrChoices'
+ });
+}
+async function copyCorrelationResultImage(){
+ try{const canvas=await makeCorrelationResultCanvas();await copyCanvas(canvas);$('corrCopyStatus').textContent='Correlation result image prepared. If clipboard image is unsupported, download the PNG.'}
+ catch(e){$('corrCopyStatus').textContent='Could not create image. Use Download Result PNG instead.';alert('Could not create correlation image. Use Download Result PNG instead.')}
+}
+async function downloadCorrelationResultImage(){
+ try{const canvas=await makeCorrelationResultCanvas();downloadCanvas(canvas,'Correlation-Matrix-Result.png');$('corrCopyStatus').textContent='Correlation-Matrix-Result.png download requested.'}
+ catch(e){$('corrCopyStatus').textContent='Could not create PNG. Please try again in Chrome.';alert('Could not create correlation PNG.')}
+}
+
+let lastMultiModel=null;
+function renderMultiSelectors(preserve=true){
+ if(!$('multiYCol'))return;
+ const oldY=$('multiYCol').value;
+ const opts=H.map((h,i)=>`<option value="${i}">${esc(h||colName(i))}</option>`).join('');
+ $('multiYCol').innerHTML=opts;
+ $('multiYCol').value=preserve&&oldY<C?oldY:String(Math.min(4,C-1));
+ const checked=new Set(Array.from(document.querySelectorAll('#multiXChoices input:checked')).map(e=>e.value));
+ $('multiXChoices').innerHTML=H.map((h,i)=>`<label class="multi-choice"><input type="checkbox" value="${i}" ${checked.has(String(i))?'checked':''} onchange="updateMultiPredictionInputs()"> ${esc(h||colName(i))}</label>`).join('');
+ updateMultiPredictionInputs();
+}
+function selectDefaultMultiPredictors(){
+ const target=[0,1,2,3].filter(i=>i<C);
+ document.querySelectorAll('#multiXChoices input').forEach(e=>e.checked=target.includes(+e.value));
+ if($('multiYCol')&&C>4)$('multiYCol').value='4';
+ updateMultiPredictionInputs();
+}
+function matrixInverse(matrix){
+ const n=matrix.length,a=matrix.map((row,i)=>row.slice().concat(Array.from({length:n},(_,j)=>i===j?1:0)));
+ for(let i=0;i<n;i++){
+   let pivot=i;for(let r=i+1;r<n;r++)if(Math.abs(a[r][i])>Math.abs(a[pivot][i]))pivot=r;
+   if(Math.abs(a[pivot][i])<1e-10)throw Error('Predictors are linearly dependent or severely collinear; XᵀX is singular.');
+   [a[i],a[pivot]]=[a[pivot],a[i]];
+   const div=a[i][i];for(let j=0;j<2*n;j++)a[i][j]/=div;
+   for(let r=0;r<n;r++){if(r===i)continue;const f=a[r][i];for(let j=0;j<2*n;j++)a[r][j]-=f*a[i][j];}
+ }
+ return a.map(row=>row.slice(n));
+}
+function dot(a,b){return a.reduce((s,v,i)=>s+v*b[i],0)}
+function olsFit(X,y){
+ const n=X.length,k=X[0].length,xtx=Array.from({length:k},(_,i)=>Array.from({length:k},(_,j)=>sum(X.map(row=>row[i]*row[j]))));
+ const xty=Array.from({length:k},(_,i)=>sum(X.map((row,r)=>row[i]*y[r])));
+ const inv=matrixInverse(xtx),beta=inv.map(row=>dot(row,xty)),fitted=X.map(row=>dot(row,beta)),res=y.map((v,i)=>v-fitted[i]);
+ const my=mean(y),sst=sum(y.map(v=>(v-my)**2)),sse=sum(res.map(v=>v*v)),ssr=Math.max(0,sst-sse),dfE=n-k;
+ if(dfE<=0)throw Error(`Need more complete rows than model parameters. N=${n}, parameters=${k}.`);
+ const mse=sse/dfE,r2=sst>0?1-sse/sst:NaN,adj=1-(1-r2)*(n-1)/dfE;
+ return {n,k,dfE,X,y,beta,inv,fitted,res,sst,sse,ssr,mse,r2,adj,meanY:my};
+}
+function fSurvival(f,df1,df2){
+ if(!Number.isFinite(f)||f<0||df1<=0||df2<=0)return NaN;
+ const x=df2/(df2+df1*f);return Math.max(0,Math.min(1,ibeta(x,df2/2,df1/2)));
+}
+function calculateVif(X, predictorIndex){
+ const n=X.length,cols=X[0].length-1;
+ if(cols<=1)return 1;
+ const y=X.map(row=>row[predictorIndex+1]);
+ const others=X.map(row=>[1,...row.slice(1).filter((_,j)=>j!==predictorIndex)]);
+ try{const fit=olsFit(others,y);return fit.r2>=1-1e-12?Infinity:1/(1-fit.r2)}catch(e){return Infinity}
+}
+function runMultipleRegression(){
+ syncInputs();
+ const yCol=+$('multiYCol').value;
+ const xCols=Array.from(document.querySelectorAll('#multiXChoices input:checked')).map(e=>+e.value).filter(c=>c!==yCol);
+ if(!xCols.length){$('multiNotice').textContent='Select at least one Input/Factor column different from the Output column.';return}
+ const cols=[yCol,...xCols];
+ const rows=D.map((row,i)=>({row:i+1,vals:cols.map(c=>String(row[c]??'').trim())}))
+   .filter(o=>o.vals.every(v=>v!==''&&Number.isFinite(Number(v))));
+ const n=rows.length,k=xCols.length+1;
+ if(n<=k){$('multiNotice').textContent=`Need more complete numeric rows than model parameters. Found N=${n}; parameters=${k}.`;return}
+ const y=rows.map(o=>Number(o.vals[0]));
+ const predictors=xCols.map((c,j)=>rows.map(o=>Number(o.vals[j+1])));
+ const X=rows.map((o,i)=>[1,...predictors.map(a=>a[i])]);
+ let fit;
+ try{fit=olsFit(X,y)}catch(e){$('multiNotice').textContent=e.message;return}
+ const conf=+$('confidence').value,tc=tCritical(conf,fit.dfE),se=fit.beta.map((_,i)=>Math.sqrt(Math.max(0,fit.mse*fit.inv[i][i])));
+ const t=fit.beta.map((b,i)=>se[i]>0?b/se[i]:(Math.abs(b)<1e-12?0:Math.sign(b)*Infinity));
+ const pvals=t.map(v=>tTwoTail(v,fit.dfE));
+ const f=(fit.ssr/xCols.length)/fit.mse,fp=fSurvival(f,xCols.length,fit.dfE);
+ const vifs=xCols.map((c,j)=>calculateVif(X,j));
+ fit.xCols=xCols;fit.yCol=yCol;fit.rows=rows;fit.conf=conf;fit.tc=tc;fit.se=se;fit.t=t;fit.pvals=pvals;fit.f=f;fit.fp=fp;fit.vifs=vifs;lastMultiModel=fit;
+ $('multiN').textContent=n;$('multiR2').textContent=fmt(fit.r2*100,2)+'%';$('multiAdjR2').textContent=fmt(fit.adj*100,2)+'%';$('multiP').textContent=fmt(fp,5);
+ $('multiNotice').innerHTML=`<b>Multiple regression completed.</b><br>Response: ${esc(H[yCol])}; predictors: ${xCols.map(c=>esc(H[c])).join(', ')}; ${n} complete numeric rows used. Confidence level: ${(conf*100).toFixed(0)}%.`;
+ $('multiSummary').querySelector('tbody').innerHTML=`<tr><td>${n}</td><td>${xCols.length}</td><td>${fmt(fit.r2*100,2)}%</td><td>${fmt(fit.adj*100,2)}%</td><td>${fmt(Math.sqrt(fit.mse),5)}</td><td>${fit.dfE}</td></tr>`;
+ $('multiAnova').querySelector('tbody').innerHTML=`<tr><td>Regression</td><td>${xCols.length}</td><td>${fmt(fit.ssr,5)}</td><td>${fmt(fit.ssr/xCols.length,5)}</td><td>${fmt(f,5)}</td><td>${fmt(fp,5)}</td></tr><tr><td>Error</td><td>${fit.dfE}</td><td>${fmt(fit.sse,5)}</td><td>${fmt(fit.mse,5)}</td><td>—</td><td>—</td></tr><tr><td>Total</td><td>${n-1}</td><td>${fmt(fit.sst,5)}</td><td>—</td><td>—</td><td>—</td></tr>`;
+ $('multiCoef').querySelector('tbody').innerHTML=fit.beta.map((b,i)=>{
+   const term=i===0?'Constant':H[xCols[i-1]],lo=b-tc*se[i],hi=b+tc*se[i],vif=i===0?'—':(Number.isFinite(vifs[i-1])?fmt(vifs[i-1],3):'∞');
+   return `<tr><td>${esc(term)}</td><td>${fmt(b,6)}</td><td>${fmt(se[i],6)}</td><td>${fmt(t[i],4)}</td><td>${fmt(pvals[i],5)}</td><td>${fmt(lo,6)}</td><td>${fmt(hi,6)}</td><td>${vif}</td></tr>`;
+ }).join('');
+ updateMultiPredictionInputs();calculateMultiplePrediction();
+}
+function updateMultiPredictionInputs(){
+ const holder=$('multiPredictionInputs');if(!holder)return;
+ const checked=Array.from(document.querySelectorAll('#multiXChoices input:checked')).map(e=>+e.value).filter(c=>c!==+$('multiYCol').value);
+ holder.innerHTML=checked.map((c,i)=>`<div class="field"><label for="multiPredX${c}">${esc(H[c]||colName(c))}</label><input id="multiPredX${c}" type="number" step="any" value="${i===0?'30':i===1?'18':i===2?'10':'120'}"></div>`).join('');
+}
+function calculateMultiplePrediction(){
+ const m=lastMultiModel;if(!m){$('multiPredY').textContent=$('multiPredStatus').textContent='—';$('multiPredNote').textContent='Run Multiple Regression first.';return}
+ const xs=m.xCols.map(c=>{const el=$('multiPredX'+c);return el&&el.value.trim()!==''?Number(el.value):NaN});
+ if(xs.some(v=>!Number.isFinite(v))){$('multiPredY').textContent='—';$('multiPredStatus').textContent='Invalid input';$('multiPredNote').textContent='Enter a numeric prediction value for every selected predictor.';return}
+ const pred=m.beta[0]+sum(xs.map((v,i)=>m.beta[i+1]*v));
+ $('multiPredY').textContent=fmt(pred,5);
+ const outside=xs.some((v,j)=>{const vals=m.X.map(row=>row[j+1]);return v<Math.min(...vals)||v>Math.max(...vals)});
+ $('multiPredStatus').textContent=outside?'Extrapolation':'Within data range';
+ $('multiPredNote').textContent=outside?'Warning: at least one predictor is outside its observed range. This is extrapolation and may be unreliable.':'All predictor values are within their respective observed ranges. This is a point prediction; interval estimates are not included in this V1.5 multi-predictor panel.';
+}
+
+function calculatePrediction(){
+  const m=lastModel;
+  const note=$('predictionNote');
+  if(!m){$('predY').textContent=$('predCI').textContent=$('predPI').textContent='—';note.textContent='Run Analysis first, then enter an X value.';return}
+  const raw=$('predictX').value;
+  const x0=Number(raw);
+  if(raw.trim()===''||!Number.isFinite(x0)){
+    $('predY').textContent=$('predCI').textContent=$('predPI').textContent='—';
+    note.textContent='Enter a valid numeric X value.';return;
+  }
+  const yhat=m.b0+m.b1*x0;
+  const seMean=Math.sqrt(Math.max(0,m.MSE*(1/m.pairs.length+((x0-m.mx)**2/m.Sxx))));
+  const sePred=Math.sqrt(Math.max(0,m.MSE*(1+1/m.pairs.length+((x0-m.mx)**2/m.Sxx))));
+  const tc=tCritical(m.conf,m.dfE);
+  const ciLo=yhat-tc*seMean,ciHi=yhat+tc*seMean;
+  const piLo=yhat-tc*sePred,piHi=yhat+tc*sePred;
+  $('predY').textContent=fmt(yhat,5);
+  $('predCI').textContent=`[${fmt(ciLo,5)}, ${fmt(ciHi,5)}]`;
+  $('predPI').textContent=`[${fmt(piLo,5)}, ${fmt(piHi,5)}]`;
+  const minX=Math.min(...m.xs),maxX=Math.max(...m.xs);
+  const outside=x0<minX||x0>maxX;
+  note.textContent=`${(m.conf*100).toFixed(0)}% intervals; residual degrees of freedom = ${m.dfE}. `+
+    (outside?`Warning: X₀ = ${fmt(x0,5)} is outside the observed X range [${fmt(minX,5)}, ${fmt(maxX,5)}]; this is extrapolation and may be unreliable.`:
+    `X₀ is within the observed X range [${fmt(minX,5)}, ${fmt(maxX,5)}].`) +
+    ` Mean-response CI uses SE = √[MSE(1/n + (X₀ − mean X)²/Sxx)]; individual prediction interval uses SE = √[MSE(1 + 1/n + (X₀ − mean X)²/Sxx)].`;
+}
+
+function runAnalysis(){syncInputs();const xc=+$('xCol').value,yc=+$('yCol').value;if(xc===yc){$('resultNotice').textContent='Please select different columns for X and Y.';return}const pairs=D.map((r,i)=>({x:Number(String(r[xc]).trim()),y:Number(String(r[yc]).trim()),row:i+1})).filter(p=>String(D[p.row-1][xc]).trim()!==''&&String(D[p.row-1][yc]).trim()!==''&&Number.isFinite(p.x)&&Number.isFinite(p.y));const invalid=D.filter(r=>String(r[xc]).trim()!==''||String(r[yc]).trim()!=='').length-pairs.length;if(pairs.length<3){$('resultNotice').textContent=`At least 3 complete numeric X/Y pairs are required. Found ${pairs.length}.`;return}const xs=pairs.map(p=>p.x),ys=pairs.map(p=>p.y),mx=mean(xs),my=mean(ys),Sxx=sum(xs.map(x=>(x-mx)**2)),Syy=sum(ys.map(y=>(y-my)**2)),Sxy=sum(pairs.map(p=>(p.x-mx)*(p.y-my)));if(Sxx===0||Syy===0){$('resultNotice').textContent='Cannot calculate correlation/regression because X or Y has zero variation.';return}const b1=Sxy/Sxx,b0=my-b1*mx,r=Sxy/Math.sqrt(Sxx*Syy),r2=r*r,adj=1-(1-r2)*(pairs.length-1)/(pairs.length-2),SSE=Math.max(0,Syy-b1*Sxy),SSR=Math.max(0,Syy-SSE),dfE=pairs.length-2,MSE=SSE/dfE,SE=Math.sqrt(MSE),seB1=Math.sqrt(MSE/Sxx),seB0=Math.sqrt(MSE*(1/pairs.length+mx*mx/Sxx)),tB1=b1/seB1,pB1=tTwoTail(tB1,dfE),tB0=b0/seB0,pB0=tTwoTail(tB0,dfE),F=MSE===0?(SSR===0?0:Infinity):(SSR/MSE),pF=pB1,conf=+$('confidence').value,tc=tCritical(conf,dfE),ciB0=[b0-tc*seB0,b0+tc*seB0],ciB1=[b1-tc*seB1,b1+tc*seB1],sst=Syy;lastModel={pairs,xs,ys,mx,my,Sxx,Syy,Sxy,b1,b0,r,r2,adj,SSE,SSR,MSE,SE,dfE,seB1,seB0,tB1,tB0,pB1,pB0,F,pF,tc,ciB0,ciB1,conf};
+$('nMetric').textContent=pairs.length;$('rMetric').textContent=fmt(r,4);$('r2Metric').textContent=fmt(r2*100,2)+'%';$('eqMetric').textContent=`Y = ${fmt(b0,4)} ${b1<0?'−':'+'} ${fmt(Math.abs(b1),4)}X`;$('resultNotice').innerHTML=`<b>Analysis completed</b><br>${esc(H[xc])} (X) vs ${esc(H[yc])} (Y): ${pairs.length} complete numeric pairs used.${invalid?` ${invalid} row(s) with partial or nonnumeric values were excluded.`:''}<br>Confidence level: ${(conf*100).toFixed(0)}%.`;let strength=Math.abs(r)>=.8?'strong':Math.abs(r)>=.5?'moderate':Math.abs(r)>=.3?'weak':'very weak';$('interpretation').innerHTML=`<b>${strength[0].toUpperCase()+strength.slice(1)} ${r>=0?'positive':'negative'} linear association.</b><br>Pearson r = ${fmt(r,4)}; R² = ${fmt(r2*100,2)}%. Slope = ${fmt(b1,5)}. Slope p-value = ${fmt(pB1,5)}. ${pB1<.05?'The slope is statistically significant at α = 0.05.':'The slope is not statistically significant at α = 0.05.'}<br><span class="check">Association does not establish causation.</span>`;
+$('summaryTable').querySelector('tbody').innerHTML=`<tr><td>Regression</td><td>${pairs.length}</td><td>${fmt(r,4)}</td><td>${fmt(r2*100,2)}%</td><td>${fmt(adj*100,2)}%</td><td>${fmt(SE,5)}</td></tr>`;$('anovaTable').querySelector('tbody').innerHTML=`<tr><td>Regression</td><td>1</td><td>${fmt(SSR,5)}</td><td>${fmt(SSR,5)}</td><td>${fmt(F,4)}</td><td>${fmt(pF,5)}</td></tr><tr><td>Error</td><td>${dfE}</td><td>${fmt(SSE,5)}</td><td>${fmt(MSE,5)}</td><td>—</td><td>—</td></tr><tr><td>Total</td><td>${pairs.length-1}</td><td>${fmt(sst,5)}</td><td>—</td><td>—</td><td>—</td></tr>`;$('coefTable').querySelector('tbody').innerHTML=`<tr><td>Constant</td><td>${fmt(b0,6)}</td><td>${fmt(seB0,6)}</td><td>${fmt(tB0,4)}</td><td>${fmt(pB0,5)}</td><td>${fmt(ciB0[0],6)}</td><td>${fmt(ciB0[1],6)}</td></tr><tr><td>${esc(H[xc])}</td><td>${fmt(b1,6)}</td><td>${fmt(seB1,6)}</td><td>${fmt(tB1,4)}</td><td>${fmt(pB1,5)}</td><td>${fmt(ciB1[0],6)}</td><td>${fmt(ciB1[1],6)}</td></tr>`;$('chartHeading').textContent=$('chartTitle').value||'Regression Plot';$('xLabel').placeholder=H[xc];$('yLabel').placeholder=H[yc];drawChart();renderDiagnostics();calculatePrediction()}
+function inverseNormal(p){
+  // Acklam inverse-normal approximation; p must be strictly between 0 and 1.
+  const a=[-3.969683028665376e1,2.209460984245205e2,-2.759285104469687e2,1.383577518672690e2,-3.066479806614716e1,2.506628277459239],b=[-5.447609879822406e1,1.615858368580409e2,-1.556989798598866e2,6.680131188771972e1,-1.328068155288572e1],c=[-7.784894002430293e-3,-3.223964580411365e-1,-2.400758277161838,-2.549732539343734,4.374664141464968,2.938163982698783],d=[7.784695709041462e-3,3.224671290700398e-1,2.445134137142996,3.754408661907416];
+  const pl=.02425,ph=1-pl;let q,r;
+  if(p<pl){q=Math.sqrt(-2*Math.log(p));return (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1)}
+  if(p>ph){q=Math.sqrt(-2*Math.log(1-p));return -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1)}
+  q=p-.5;r=q*q;return (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1)
+}
+function diagnosticRows(m){
+  const n=m.pairs.length,p=2;return m.pairs.map((o,i)=>{
+    const fitted=m.b0+m.b1*o.x,residual=o.y-fitted,leverage=1/n+((o.x-m.mx)**2/m.Sxx);
+    const std=m.MSE>0&&1-leverage>0?residual/Math.sqrt(m.MSE*(1-leverage)):(Math.abs(residual)<1e-12?0:NaN);
+    const cook=m.MSE>0&&1-leverage>1e-12?(residual*residual/(p*m.MSE))*(leverage/((1-leverage)**2)):(Math.abs(residual)<1e-12?0:Infinity);
+    const flag=[];if(Number.isFinite(std)&&Math.abs(std)>2)flag.push('|Std. Residual| > 2');if(leverage>2*p/n)flag.push('High leverage');if(cook>4/n)flag.push("Cook's D > 4/N");
+    return {row:o.row,x:o.x,y:o.y,fitted,residual,std,leverage,cook,flag};
+  });
+}
+function drawDiagnostic(id,title,xLabel,yLabel,points,opts={}){
+  const canvas=$(id);if(!canvas)return;const ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height,style=getComputedStyle(document.body),fg=style.getPropertyValue('--text').trim()||'#183153',muted=style.getPropertyValue('--muted').trim()||'#66788a',grid=($('gridColor')&&$('gridColor').value)||style.getPropertyValue('--border').trim()||'#d9e2ec',pt=($('pointColor')&&$('pointColor').value)||'#d97706',line=($('lineColor')&&$('lineColor').value)||'#176dbf',bg=style.getPropertyValue('--panel-bg').trim()||'#fff';
+  ctx.clearRect(0,0,w,h);ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);ctx.fillStyle=fg;ctx.font='bold 21px Arial';ctx.textAlign='left';ctx.fillText(title,58,34);
+  if(!points||!points.length){ctx.fillStyle=muted;ctx.font='19px Arial';ctx.fillText('Run analysis to display diagnostics.',58,h/2);return}
+  let xs=points.map(p=>p.x),ys=points.map(p=>p.y);let xmin=Math.min(...xs),xmax=Math.max(...xs),ymin=Math.min(...ys),ymax=Math.max(...ys);if(!Number.isFinite(xmin)||!Number.isFinite(xmax)||!Number.isFinite(ymin)||!Number.isFinite(ymax))return;
+  let xr=xmax-xmin||1,yr=ymax-ymin||1;xmin-=xr*.08;xmax+=xr*.08;ymin-=yr*.12;ymax+=yr*.12;
+  const pad={l:80,r:30,t:65,b:75},pw=w-pad.l-pad.r,ph=h-pad.t-pad.b,X=x=>pad.l+(x-xmin)/(xmax-xmin)*pw,Y=y=>pad.t+ph-(y-ymin)/(ymax-ymin)*ph;
+  ctx.strokeStyle=grid;ctx.lineWidth=1;ctx.fillStyle=muted;ctx.font='15px Arial';for(let i=0;i<=4;i++){let xx=pad.l+pw*i/4,yy=pad.t+ph*i/4;ctx.beginPath();ctx.moveTo(xx,pad.t);ctx.lineTo(xx,pad.t+ph);ctx.stroke();ctx.beginPath();ctx.moveTo(pad.l,yy);ctx.lineTo(pad.l+pw,yy);ctx.stroke();ctx.textAlign='center';ctx.fillText((xmin+(xmax-xmin)*i/4).toPrecision(4),xx,pad.t+ph+24);ctx.textAlign='right';ctx.fillText((ymax-(ymax-ymin)*i/4).toPrecision(4),pad.l-9,yy+5)}
+  if(opts.zeroLine!==false&&ymin<=0&&ymax>=0){ctx.strokeStyle=line;ctx.setLineDash([7,6]);ctx.beginPath();ctx.moveTo(pad.l,Y(0));ctx.lineTo(pad.l+pw,Y(0));ctx.stroke();ctx.setLineDash([])}
+  if(opts.refLine){ctx.strokeStyle=line;ctx.setLineDash([6,5]);ctx.beginPath();ctx.moveTo(X(opts.refLine[0]),Y(opts.refLine[1]));ctx.lineTo(X(opts.refLine[2]),Y(opts.refLine[3]));ctx.stroke();ctx.setLineDash([])}
+  ctx.fillStyle=pt;points.forEach(p=>{ctx.beginPath();ctx.arc(X(p.x),Y(p.y),5,0,Math.PI*2);ctx.fill()});ctx.strokeStyle=fg;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(pad.l,pad.t);ctx.lineTo(pad.l,pad.t+ph);ctx.lineTo(pad.l+pw,pad.t+ph);ctx.stroke();ctx.fillStyle=fg;ctx.font='bold 17px Arial';ctx.textAlign='center';ctx.fillText(xLabel,pad.l+pw/2,h-22);ctx.save();ctx.translate(22,pad.t+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText(yLabel,0,0);ctx.restore();
+}
+
+function drawResidualHistogram(canvasId, residuals){
+  const canvas=$(canvasId),ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
+  const style=getComputedStyle(document.body);
+  const fg=style.getPropertyValue('--text').trim()||'#183153';
+  const muted=style.getPropertyValue('--muted').trim()||'#66788a';
+  const grid=($('gridColor')&&$('gridColor').value)||style.getPropertyValue('--border').trim()||'#d9e2ec';
+  const barColor=($('pointColor')&&$('pointColor').value)||'#d97706';
+  const bg=style.getPropertyValue('--panel-bg').trim()||'#fff';
+  ctx.clearRect(0,0,w,h);ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
+  ctx.fillStyle=fg;ctx.font='bold 21px Arial';ctx.textAlign='left';ctx.fillText('Histogram of Residuals',58,34);
+  if(!residuals||!residuals.length){
+    ctx.fillStyle=muted;ctx.font='19px Arial';ctx.fillText('Run analysis to display residuals.',58,h/2);return;
+  }
+  const n=residuals.length;
+  let min=Math.min(...residuals),max=Math.max(...residuals);
+  if(!Number.isFinite(min)||!Number.isFinite(max))return;
+  if(min===max){const pad=Math.abs(min)*0.05||0.5;min-=pad;max+=pad;}
+  // Use a reasonable number of contiguous bins. Every residual is counted exactly once.
+  const binCount=Math.max(5,Math.min(10,Math.ceil(Math.sqrt(n))));
+  const binWidth=(max-min)/binCount;
+  const counts=Array(binCount).fill(0);
+  residuals.forEach(v=>{
+    const idx=Math.max(0,Math.min(binCount-1,Math.floor((v-min)/binWidth)));
+    counts[idx]++;
+  });
+  const maxCount=Math.max(1,...counts);
+  const niceStep=maxCount<=5?1:(maxCount<=10?2:(maxCount<=20?5:Math.ceil(maxCount/5)));
+  const yMax=Math.max(niceStep,Math.ceil(maxCount/niceStep)*niceStep);
+  const pad={l:88,r:34,t:65,b:88},pw=w-pad.l-pad.r,ph=h-pad.t-pad.b;
+  const X=v=>pad.l+(v-min)/(max-min)*pw;
+  const Y=v=>pad.t+ph-(v/yMax)*ph;
+  ctx.strokeStyle=grid;ctx.lineWidth=1;ctx.fillStyle=muted;ctx.font='15px Arial';
+  for(let i=0;i<=5;i++){
+    const yy=pad.t+ph*i/5, val=yMax*(1-i/5);
+    ctx.beginPath();ctx.moveTo(pad.l,yy);ctx.lineTo(pad.l+pw,yy);ctx.stroke();
+    ctx.textAlign='right';ctx.fillText(String(Math.round(val)),pad.l-10,yy+5);
+  }
+  // Draw real bars (not scatter points); small gaps make each bin visible.
+  counts.forEach((count,i)=>{
+    const x0=min+i*binWidth,x1=x0+binWidth;
+    const left=X(x0)+2,right=X(x1)-2,top=Y(count),base=Y(0);
+    ctx.fillStyle=barColor;
+    ctx.fillRect(left,top,Math.max(1,right-left),Math.max(0,base-top));
+    ctx.strokeStyle=bg;ctx.lineWidth=1;ctx.strokeRect(left,top,Math.max(1,right-left),Math.max(0,base-top));
+  });
+  // Label a maximum of five evenly spaced bin boundaries to keep labels readable.
+  ctx.fillStyle=muted;ctx.font='14px Arial';ctx.textAlign='center';
+  for(let j=0;j<=4;j++){
+    const v=min+(max-min)*j/4;
+    ctx.fillText(v.toFixed(3),X(v),pad.t+ph+24);
+  }
+  ctx.strokeStyle=fg;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(pad.l,pad.t);ctx.lineTo(pad.l,pad.t+ph);ctx.lineTo(pad.l+pw,pad.t+ph);ctx.stroke();
+  ctx.fillStyle=fg;ctx.font='bold 17px Arial';ctx.textAlign='center';ctx.fillText('Residual',pad.l+pw/2,h-22);
+  ctx.save();ctx.translate(22,pad.t+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText('Frequency (count)',0,0);ctx.restore();
+  ctx.fillStyle=muted;ctx.font='14px Arial';ctx.textAlign='right';ctx.fillText(`N = ${n} residuals`,w-34,49);
+  // Internal sanity check: displayed bin frequencies must sum to N.
+  if(counts.reduce((a,b)=>a+b,0)!==n){console.error('Residual histogram count mismatch');}
+}
+
+function renderDiagnostics(){
+  const m=lastModel;if(!m){['diagOrder','diagNormal','diagFitted','diagHist'].forEach(id=>drawDiagnostic(id,'','', '',[]));$('diagnosticSummary').textContent='Run analysis to calculate residual diagnostics. Screening thresholds are indicators for review, not automatic reasons to delete observations.';$('diagnosticTable').querySelector('tbody').innerHTML='<tr><td colspan="8" style="text-align:left">Run Analysis to calculate diagnostics.</td></tr>';return}
+  const rows=diagnosticRows(m),res=rows.map(d=>d.residual),n=rows.length;
+  drawDiagnostic('diagOrder','Residuals vs Order','Worksheet order','Residual',rows.map(d=>({x:d.row,y:d.residual})));
+  const ordered=res.slice().sort((a,b)=>a-b),normal=ordered.map((v,i)=>({x:inverseNormal((i+.5)/n),y:v}));drawDiagnostic('diagNormal','Normal Probability Plot','Theoretical normal score','Ordered residual',normal,{zeroLine:false,refLine:[normal[0].x,mean(ordered)-1.0*Math.sqrt(m.MSE),normal[normal.length-1].x,mean(ordered)+1.0*Math.sqrt(m.MSE)]});
+  drawDiagnostic('diagFitted','Residuals vs Fitted Values','Fitted Y','Residual',rows.map(d=>({x:d.fitted,y:d.residual})));
+  drawResidualHistogram('diagHist',res);
+  const flagged=rows.filter(d=>d.flag.length);$('diagnosticSummary').textContent=`${n} residuals calculated. Screening thresholds: |standardized residual| > 2; leverage > 2p/N; Cook's distance > 4/N (p = 2). ${flagged.length?flagged.length+' row(s) flagged for review.':'No rows flagged by these screening thresholds.'} These are screening indicators, not proof of an error or a reason to automatically remove data.`;
+  const tbody=$('diagnosticTable').querySelector('tbody');if(!flagged.length){tbody.innerHTML='<tr><td colspan="8" style="text-align:left">No rows exceeded the current screening thresholds. Review plots and process context as well.</td></tr>';return}
+  tbody.innerHTML=flagged.map(d=>`<tr><td>${d.row}</td><td>${fmt(d.y,5)}</td><td>${fmt(d.fitted,5)}</td><td>${fmt(d.residual,5)}</td><td>${fmt(d.std,4)}</td><td>${fmt(d.leverage,4)}</td><td>${Number.isFinite(d.cook)?fmt(d.cook,4):'∞'}</td><td class="diag-flag">${esc(d.flag.join('; '))}</td></tr>`).join('');
+}
+function updateChartOnly(){if(lastModel)runAnalysis();else drawChart()}
+function drawChart(){const canvas=$('plot'),ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);const style=getComputedStyle(document.body),fg=style.getPropertyValue('--text').trim()||'#183153',muted=style.getPropertyValue('--muted').trim()||'#66788a',grid=($('gridColor')&&$('gridColor').value)||style.getPropertyValue('--border').trim()||'#d9e2ec',accent=($('lineColor')&&$('lineColor').value)||style.getPropertyValue('--accent').trim()||'#176dbf',pointColor=($('pointColor')&&$('pointColor').value)||'#d97706',bandColor=($('bandColor')&&$('bandColor').value)||accent,bg=style.getPropertyValue('--panel-bg').trim()||'#fff';ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);ctx.fillStyle=fg;ctx.font='bold 22px Arial';ctx.fillText($('chartTitle').value||'Regression Plot',65,38);if(!lastModel){ctx.fillStyle=muted;ctx.font='20px Arial';ctx.fillText('Run analysis to display data points and regression line.',65,h/2);$('chartHeading').textContent=$('chartTitle').value||'Regression Plot';return}const m=lastModel,xs=m.xs,ys=m.ys,pad={l:90,r:35,t:75,b:85},pw=w-pad.l-pad.r,ph=h-pad.t-pad.b,xmin=Math.min(...xs),xmax=Math.max(...xs),ymin=Math.min(...ys),ymax=Math.max(...ys),xr=(xmax-xmin)||1,yr=(ymax-ymin)||1;const xlo=xmin-xr*.08,xhi=xmax+xr*.08,ylo=ymin-yr*.12,yhi=ymax+yr*.18;const X=x=>pad.l+(x-xlo)/(xhi-xlo)*pw,Y=y=>pad.t+ph-(y-ylo)/(yhi-ylo)*ph;ctx.strokeStyle=grid;ctx.lineWidth=1;ctx.fillStyle=muted;ctx.font='16px Arial';for(let i=0;i<=5;i++){let xx=pad.l+pw*i/5,yy=pad.t+ph*i/5;ctx.beginPath();ctx.moveTo(xx,pad.t);ctx.lineTo(xx,pad.t+ph);ctx.stroke();ctx.beginPath();ctx.moveTo(pad.l,yy);ctx.lineTo(pad.l+pw,yy);ctx.stroke();ctx.textAlign='center';ctx.fillText((xlo+(xhi-xlo)*i/5).toFixed(2),xx,pad.t+ph+28);ctx.textAlign='right';ctx.fillText((yhi-(yhi-ylo)*i/5).toFixed(2),pad.l-12,yy+5)}ctx.strokeStyle=fg;ctx.beginPath();ctx.moveTo(pad.l,pad.t);ctx.lineTo(pad.l,pad.t+ph);ctx.lineTo(pad.l+pw,pad.t+ph);ctx.stroke();ctx.fillStyle=fg;ctx.textAlign='center';ctx.font='bold 18px Arial';ctx.fillText($('xLabel').value||H[+$('xCol').value]||'X',pad.l+pw/2,h-25);ctx.save();ctx.translate(25,pad.t+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText($('yLabel').value||H[+$('yCol').value]||'Y',0,0);ctx.restore();const x1=xlo,x2=xhi,y1=m.b0+m.b1*x1,y2=m.b0+m.b1*x2;if($('showBand').value==='yes'){ctx.fillStyle=bandColor+'26';ctx.beginPath();for(let i=0;i<=50;i++){const x=x1+(x2-x1)*i/50,fit=m.b0+m.b1*x,se=Math.sqrt(m.MSE*(1/m.pairs.length+(x-m.mx)**2/m.Sxx));const yy=fit+m.tc*se;i===0?ctx.moveTo(X(x),Y(yy)):ctx.lineTo(X(x),Y(yy))}for(let i=50;i>=0;i--){const x=x1+(x2-x1)*i/50,fit=m.b0+m.b1*x,se=Math.sqrt(m.MSE*(1/m.pairs.length+(x-m.mx)**2/m.Sxx));ctx.lineTo(X(x),Y(fit-m.tc*se))}ctx.closePath();ctx.fill()}if($('chartStyle').value!=='points'){ctx.strokeStyle=accent;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(X(x1),Y(y1));ctx.lineTo(X(x2),Y(y2));ctx.stroke()}ctx.fillStyle=pointColor;m.pairs.forEach((p,i)=>{ctx.beginPath();ctx.arc(X(p.x),Y(p.y),6,0,Math.PI*2);ctx.fill();if($('chartStyle').value==='line'&&i>0){ctx.strokeStyle=pointColor;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(X(m.pairs[i-1].x),Y(m.pairs[i-1].y));ctx.lineTo(X(p.x),Y(p.y));ctx.stroke()}});ctx.textAlign='left';ctx.fillStyle=fg;ctx.font='16px Arial';ctx.fillText(`r = ${m.r.toFixed(4)}    R² = ${(m.r2*100).toFixed(2)}%`,pad.l+12,pad.t+24);$('chartHeading').textContent=$('chartTitle').value||'Regression Plot'}
+function canvasBlob(canvas){return new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(Error('PNG creation failed')),'image/png'))}async function copyCanvas(canvas){try{const b=await canvasBlob(canvas);if(!navigator.clipboard||!window.ClipboardItem)throw Error('Clipboard image not supported');await navigator.clipboard.write([new ClipboardItem({'image/png':b})]);alert('Graph image copied. Paste it into PowerPoint or another app.')}catch(e){alert('Image clipboard is unavailable in this browser. Use Download Graph PNG instead.')}}function downloadCanvas(canvas,name){const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download=name;a.click()}async function copyChartImage(){await copyCanvas($('plot'))}function downloadChartImage(){downloadCanvas($('plot'),'Regression-Correlation-Plot.png')}async function copyResultImage(){try{const c=await html2canvas($('resultArea'),{backgroundColor:getComputedStyle(document.body).getPropertyValue('--panel-bg')||'#fff',scale:2,useCORS:true});await copyCanvas(c)}catch(e){alert('Could not create result image. Use Print or Download Graph PNG instead.')}}async function downloadResultImage(){try{const c=await html2canvas($('resultArea'),{backgroundColor:getComputedStyle(document.body).getPropertyValue('--panel-bg')||'#fff',scale:2,useCORS:true});downloadCanvas(c,'Regression-Correlation-Result.png')}catch(e){alert('Could not create result PNG.')}}
+function multipleResultText(){
+ const m=$('multiRegressionPanel');
+ if(!lastMultiModel)return 'Multiple Regression: No completed analysis. Run Multiple Regression first.';
+ const blocks=[
+  'MULTIPLE REGRESSION RESULT',
+  $('multiNotice').innerText,
+  'MODEL SUMMARY\n'+$('multiSummary').innerText,
+  'ANOVA\n'+$('multiAnova').innerText,
+  'COEFFICIENTS\n'+$('multiCoef').innerText,
+  'PREDICTION\nPredicted Output: '+$('multiPredY').innerText+'\nStatus: '+$('multiPredStatus').innerText,
+  $('multiPredNote').innerText,
+  'WARNING / INTERPRETATION\n'+m.querySelector('.section-note').innerText
+ ];
+ return blocks.filter(Boolean).join('\n\n');
+}
+async function copyMultipleResult(){
+ const txt=multipleResultText();
+ try{
+  if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(txt);}
+  else{fallbackCopy(txt);}
+  $('multiCopyStatus').textContent='Multiple Regression result copied as text.';
+ }catch(e){
+  fallbackCopy(txt);
+  $('multiCopyStatus').textContent='Copy command completed using the browser fallback. If clipboard access is blocked, select and copy the text manually.';
+ }
+}
+async function makeMultipleResultCanvas(){
+ const target=$('multiRegressionPanel');
+ return await html2canvas(target,{
+  backgroundColor:getComputedStyle(document.body).getPropertyValue('--panel-bg').trim()||'#071a1f',
+  scale:2,useCORS:true,
+  ignoreElements:el=>el.classList?.contains('multi-copy-actions')||
+    el.classList?.contains('multi-layout')||
+    el.classList?.contains('multi-intro')||
+    el.classList?.contains('run')||
+    el.id==='multiPredictionInputs'
+ });
+}
+async function copyMultipleResultImage(){
+ try{
+  const canvas=await makeMultipleResultCanvas();
+  await copyCanvas(canvas);
+  $('multiCopyStatus').textContent='Multiple Regression result image prepared. If image clipboard is unsupported, use Download Result PNG.';
+ }catch(e){
+  $('multiCopyStatus').textContent='Could not create the image. Please use Download Result PNG instead.';
+  alert('Could not create Multiple Regression result image. Use Download Result PNG instead.');
+ }
+}
+async function downloadMultipleResultImage(){
+ try{
+  const canvas=await makeMultipleResultCanvas();
+  downloadCanvas(canvas,'Multiple-Regression-Result.png');
+  $('multiCopyStatus').textContent='Multiple-Regression-Result.png download requested.';
+ }catch(e){
+  $('multiCopyStatus').textContent='Could not create the PNG. Please try again in Chrome.';
+  alert('Could not create Multiple Regression result PNG.');
+ }
+}
+
+function copyResult(){const txt=$('resultArea').innerText;navigator.clipboard?.writeText(txt).then(()=>alert('Result text copied.')).catch(()=>fallbackCopy(txt))}
+render();populateSelectors(false);renderMultiSelectors(false);renderCorrelationSelectors(false);selectDefaultCorrelationColumns();drawChart();try{setTheme(localStorage.getItem('regCorrTheme')||'blue')}catch(e){setTheme('blue')}
+</script></body></html>
